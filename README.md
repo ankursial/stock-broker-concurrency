@@ -29,3 +29,5 @@ A spring boot project to demonstrate concurrency issues
 * Order will be fulfulled in real time
 * Customers will buy sell shares from central authority (could be extended)
 * Check order status
+
+For Design document refer to [this](design.md)
