@@ -11,7 +11,7 @@ A spring boot project to demonstrate concurrency issues
 * Orders will be placed at market price
 * A customer should be above to deposit withdraw money
 
-### Not included:
+### Not included yet:
 * Admin can block customers
 * ShareAdmin and increase or decrease shares from the system
 * To mock the share market system, the share prices will change randomly upto 1% once a sale purchase has been done
@@ -19,7 +19,7 @@ A spring boot project to demonstrate concurrency issues
 * Generate statements, tradebook
 * System notifications
 
-### Assumptions
+### Assumptions for this project
 * System will start will constant number of shares. Share will be fixed in the market and its quantity should remain consistant.
 * Prices will not fluctuate as of now (could be extendible)
 * Auth is out of scope
@@ -39,3 +39,5 @@ To start the application
 * mvn spring-boot:run
 
 To check for concureency issue run curl command [here](/src/test/resources/concurrencyScript.txt)
+
+Concurrency issues are handled and resolved by [Optimistic Locking](https://en.wikipedia.org/wiki/Optimistic_concurrency_control)
