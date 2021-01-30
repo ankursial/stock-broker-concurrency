@@ -15,6 +15,8 @@ import com.ankur.stockbroker.repositories.StockInventoryRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderService implements IOrderService {
@@ -32,6 +34,7 @@ public class OrderService implements IOrderService {
   }
 
   @Override
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
   public StockOrder requestOrder(Customer customer, StockOrder order) {
     order.setStatus(OrderStatus.CREATED);
     order.setCustomer(customer);

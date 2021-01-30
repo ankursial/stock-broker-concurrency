@@ -12,7 +12,9 @@ import com.ankur.stockbroker.services.IStockService;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api/customers/{customerId}/orders")
 public class OrderController {
@@ -32,12 +35,24 @@ public class OrderController {
   @Autowired
   IStockService stockService;
 
+  private int MAX_TRIALS_BEFORE_FAIL = 10;
+
   @PostMapping
   public StockOrder addStockOrder(@PathVariable("customerId") @Min(1) long customerId, @RequestParam String stockSymbol,
       @Valid @RequestBody StockOrder order) {
     Customer customer = getCustomerById(customerId);
     Stock stock = getStockBySymbol(stockSymbol);
     order.setStock(stock);
+
+    for (int ndx = 0; ndx < MAX_TRIALS_BEFORE_FAIL; ndx++) {
+      try {
+        return orderService.requestOrder(customer, order);
+      } catch (ObjectOptimisticLockingFailureException e) {
+        log.warn("ObjectOptimisticLockingFailureException...");
+      }
+    }
+
+    //last try else exception will be thrown
     return orderService.requestOrder(customer, order);
   }
 

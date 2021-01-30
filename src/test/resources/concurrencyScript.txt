@@ -11,3 +11,6 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/pl
 
 //Example of concurrency issue
 640000 + (3000 - 2872) * 4000 >>>> 10,00,000
+
+//After concurrency resolution
+656000 + (3000 - 2914) * 4000 = 10,00,000
