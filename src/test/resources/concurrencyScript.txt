@@ -1,0 +1,13 @@
+
+//Total money in the system is reduced
+curl -X POST --header 'Content-Type: application/json' --header 'Accept: text/plain' 'http://localhost:8000/db-init';  seq 1 100 | xargs -n1 -P10  curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{
+  "orderType": "MARKET",
+  "quantity": 2,
+  "requestedPrice": 0
+}' 'http://localhost:8000/api/customers/1/orders?stockSymbol=AA'; curl -X GET --header 'Accept: application/json' 'http://localhost:8000/api/stock/inventory'
+
+//Expected
+2,00,000 + (3000 - 2800) * 4000 = 10,00,000
+
+//Example of concurrency issue
+640000 + (3000 - 2872) * 4000 >>>> 10,00,000
