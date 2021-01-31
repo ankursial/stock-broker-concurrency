@@ -35,8 +35,8 @@ For Design document refer to [this](design.md)
 For swagger APIs (once the server is started) please refer to http://localhost:8000/swagger-ui.html
 
 To start the application
-* MySQL DataSource details [here](src/main/resources/application.properties)
-* mvn spring-boot:run
+* add MySQL DataSource details [here](src/main/resources/application.properties)
+* run mvn spring-boot:run in the project directory
 
 To check for concureency issue run curl command [here](/src/test/resources/concurrencyScript.txt)
 
