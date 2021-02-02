@@ -17,7 +17,7 @@ Customer
 * List available shares in his account with price
 * CRU money
 
-## Entities
+## Entities and selected feilds
 
 ### Account
 
